@@ -113,7 +113,7 @@ Corrected endpoint (Flask + SQLAlchemy, minimal)
 
 Put this in part1_code_review.md or directly into your Flask app. This version is concise but production-minded.
 
-# part1_code_review.py (excerpt)
+# part1_code_review.py 
 from flask import Blueprint, request, jsonify
 from decimal import Decimal, InvalidOperation
 from sqlalchemy.exc import IntegrityError
@@ -202,14 +202,3 @@ def create_product():
         return jsonify({"error": "Internal error", "detail": str(e)}), 500
 
     return jsonify({"message": "Product created", "product_id": product.id}), 201
-
-
-Notes / choices
-
-price saved as Decimal -> SQL NUMERIC(12,2).
-
-sku DB-level unique constraint recommended.
-
-Inventory upsert uses with_for_update() to avoid concurrent updates.
-
-Use db.session.begin() to ensure atomicity.
